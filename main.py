@@ -1,10 +1,7 @@
-import flask
+import views
 
-app = flask.Flask(__name__)
+from init import app
 
-@app.route('/')
-def index():
-    return 'hello world'
 
 if __name__ == '__main__':
     app.run()
