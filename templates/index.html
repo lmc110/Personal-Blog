@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Blog</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %}Blog{% endblock %}
+{% block content %}
+    {% if session.auth_user %}
+        <a href="/create" class="create-link">+CREATE POST</a>
+        Logged in as {{ session.auth_user }},
+        <a href="/logout" class="logout-link">LOG OUT</a>
+    {% else %}
+        <a href="/login" class="login-link">LOG IN</a>
+    {% endif %}
+{% endblock %}

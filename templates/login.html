@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <a href="/" class="home">HOME</a>
+
+    <h1>Login</h1>
+    <div class="pure-u-1">
+    <form method="POST" action="/login" class="pure-form pure-form-stacked">
+        <label>Username: <input type="text" name="user" class="username-box"></label>
+        <label>Password: <input type="password" name="password" class="password-box"></label>
+        <button type="submit" class="pure-button pure-button-primary">Log In</button>
+    </form>
+    </div>
+
+{% endblock %}
