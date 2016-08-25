@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Create Post{% endblock %}
+{% block content %}
+    <a href="/" class="home">HOME</a>
+
+    <form method="POST" action="/create" class="pure-form pure-form-stacked">
+        <fieldset>
+            <legend>Create Blog Post:</legend>
+            <p>
+                <label>Title:<br>
+                    <input type="text" name="title" required="required" class="pure-input title-box">
+                </label>
+            </p>
+            <p>
+                <label>Text (Optional):<br>
+                <textarea rows="8" cols="25" name="post-text" class="text-box pure-input"></textarea>
+                </label>
+            </p>
+            <button type="submit" class="pure-button pure-button-primary">Post</button>
+        </fieldset>
+    </form>
+{% endblock %}
