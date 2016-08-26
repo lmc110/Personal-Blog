@@ -1,11 +1,49 @@
 {% extends 'base.html' %}
 {% block title %}Blog{% endblock %}
 {% block content %}
+    <div class="header pure-u-1">
     {% if session.auth_user %}
+        <div class="left-header">
         <a href="/create" class="create-link">+CREATE POST</a>
+        </div>
+        <div class="right-header">
         Logged in as {{ session.auth_user }},
         <a href="/logout" class="logout-link">LOG OUT</a>
+        </div>
     {% else %}
+        <div class="right-header">
         <a href="/login" class="login-link">LOG IN</a>
+        </div>
     {% endif %}
+    </div>
+
+    <div class="recent-heading pure-u-1">
+    <h1 class="recent-heading">RECENT POSTS</h1>
+    </div>
+
+    {% for post in posts %}
+        <div class="blog-index pure-u-1">
+        <article>
+            <h1>{{ post.title }}</h1>
+            <h3>Posted on {{ post.date.strftime("%b %d, '%y at %H:%M %p") }}</h3>
+            <p>{{ post.body|replace("\r\n", "<p>")|safe }}</p>
+        </article>
+        </div>
+    {% endfor %}
+
+    <div class="buttons-container pure-u-1">
+    <div class="prev-container">
+        {% if prevPage %}
+        <a href="/{{ page - 1 }}" class="prev pure-button">Prev</a>
+        <a href="/" class="front pure-button">Front</a>
+        {% endif %}
+    </div>
+
+    <div class="next-container">
+        {% if nextPage %}
+        <a href="/{{ page + 1 }}" class="next pure-button">Next</a>
+        {% endif %}
+    </div>
+    </div>
+
 {% endblock %}

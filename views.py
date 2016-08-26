@@ -1,14 +1,38 @@
 import flask
 import models
+import markdown
+import math
+import datetime
 
+from markupsafe import Markup
 from init import db, app
 
 
-@app.route('/')
-def index():
+@app.route('/', defaults={'page': 1})
+@app.route('/<int:page>')
+def index(page):
     auth_user = flask.session.get('auth_user', None)
+    #filter posts by posted date, most recent first
+    posts = models.Post.query.order_by(models.Post.date.desc()).all()
+    total_posts = len(posts)
+    nextPage = False
+    prevPage = False
+    maxPost = page * 5
+    minPost = maxPost - 5
+    #get 5 posts for current page number
+    posts = posts[minPost:maxPost]
+    if maxPost < total_posts:
+        nextPage = True
+    if minPost > 0:
+        prevPage = True
 
-    return flask.render_template('index.html')
+    return flask.render_template('index.html', auth_user=auth_user, posts=posts,
+                                 total_posts=total_posts,
+                                 maxPost=maxPost,
+                                 minPost=minPost,
+                                 page=page,
+                                 nextPage=nextPage,
+                                 prevPage=prevPage)
 
 
 @app.route('/login')
@@ -47,6 +71,7 @@ def handle_create():
     post = models.Post()
     post.title = title
     post.body = text
+    post.date = datetime.datetime.now(tz=None)
     db.session.add(post)
     db.session.commit()
     pid = post.id
@@ -56,6 +81,7 @@ def handle_create():
 @app.route('/posts/<int:pid>')
 def post_page(pid):
     post = models.Post.query.get(pid)
-    return flask.render_template('post.html', post=post)
-
-
+    body = Markup(markdown.markdown(post.body, output_format='html5'))
+    return flask.render_template('post.html', title=post.title,
+                                 body=body,
+                                 date=post.date)
