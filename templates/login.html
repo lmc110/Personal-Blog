@@ -4,6 +4,17 @@
     <a href="/" class="home">HOME</a>
 
     <h1>Login</h1>
+    {% if state == 'bad' %}
+        {% with errors = get_flashed_messages(category_filter=["error"]) %}
+            <div class="alert-message error">
+                <ul>
+                    {% for message in errors %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endwith %}
+    {% endif %}
     <div class="pure-u-1">
     <form method="POST" action="/login" class="pure-form pure-form-stacked">
         <label>Username: <input type="text" name="user" class="username-box"></label>
