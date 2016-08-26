@@ -26,6 +26,9 @@ def index(page):
     if minPost > 0:
         prevPage = True
 
+    if page <= 0 or page > math.ceil(total_posts / 5):
+        return flask.abort(code=404)
+
     return flask.render_template('index.html', auth_user=auth_user, posts=posts,
                                  total_posts=total_posts,
                                  maxPost=maxPost,
@@ -81,7 +84,14 @@ def handle_create():
 @app.route('/posts/<int:pid>')
 def post_page(pid):
     post = models.Post.query.get(pid)
+    if post is None:
+        return flask.abort(code=404)
     body = Markup(markdown.markdown(post.body, output_format='html5'))
     return flask.render_template('post.html', title=post.title,
                                  body=body,
                                  date=post.date)
+
+
+@app.errorhandler(404)
+def page_not_found(err):
+    return flask.render_template('404.html'), 404
