@@ -1,49 +1,155 @@
 {% extends 'base.html' %}
 {% block title %}Blog{% endblock %}
+{% block css %}/static/clean-blog.css{% endblock %}
 {% block content %}
-    <div class="header pure-u-1">
-    {% if session.auth_user %}
-        <div class="left-header">
-        <a href="/create" class="create-link">+CREATE POST</a>
+
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand" href="/">TechWorld</a>
+                {% if session.auth_user %}
+                    <a href="/create" class="navbar-brand">Create Post</a>
+                {% endif %}
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="about.html">About</a>
+                    </li>
+                    <li>
+                        <a href="/">Sample Post</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Contact</a>
+                    </li>
+                    <li>
+                        {% if session.auth_user %}
+                            <a href="/logout">Logout</a>
+                        {% else %}
+                            <a href="/login">Login</a>
+                        {% endif %}
+                    </li>
+
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
         </div>
-        <div class="right-header">
-        Logged in as {{ session.auth_user }},
-        <a href="/logout" class="logout-link">LOG OUT</a>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Page Header -->
+    <!-- Set your background image for this header on the line below. -->
+    <div class="intro-header" style="background-image: url('/static/images/home-bg.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>TechWorld</h1>
+                        <hr class="small">
+                        <span class="subheading">Delivering tech news to you from around the World.</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    {% else %}
-        <div class="right-header">
-        <a href="/login" class="login-link">LOG IN</a>
-        </div>
-    {% endif %}
     </div>
 
-    <div class="recent-heading pure-u-1">
-    <h1 class="recent-heading">RECENT POSTS</h1>
-    </div>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                {% for post in posts %}
+                    <div class="post-preview">
+                        <a href="/posts/{{ post.id }}">
+                            <h2 class="post-title">
+                                {{ post.title }}
+                            </h2>
+                            <h3 class="post-subtitle">
+                                {{ post.subtitle }}
+                            </h3>
+                        </a>
+                        <p class="post-meta">Posted on {{ post.date.strftime("%b %d, '%y at %I:%M %p") }}</p>
+                    </div>
+                    <hr>
+                {% endfor %}
 
-    {% for post in posts %}
-        <div class="blog-index pure-u-1">
-        <article>
-            <h1>{{ post.title }}</h1>
-            <h3>Posted on {{ post.date.strftime("%b %d, '%y at %H:%M %p") }}</h3>
-            <p>{{ post.body|replace("\r\n", "<p>")|safe }}</p>
-        </article>
+                <!-- Pager -->
+            {% if nextPage %}
+                <ul class="pager">
+                    <li class="next">
+                        <a href="{{ page + 1 }}">Older Posts &rarr;</a>
+                    </li>
+                </ul>
+            {% endif %}
+            {% if prevPage %}
+                <ul class="pager">
+                    <li class="prev">
+                        <a href="{{ page - 1 }}">Newer Posts &larr;</a>
+                    </li>
+                </ul>
+            {% endif %}
+            </div>
         </div>
-    {% endfor %}
-
-    <div class="buttons-container pure-u-1">
-    <div class="prev-container">
-        {% if prevPage %}
-        <a href="/{{ page - 1 }}" class="prev pure-button">Prev</a>
-        <a href="/" class="front pure-button">Front</a>
-        {% endif %}
     </div>
 
-    <div class="next-container">
-        {% if nextPage %}
-        <a href="/{{ page + 1 }}" class="next pure-button">Next</a>
-        {% endif %}
-    </div>
-    </div>
+    <hr>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <ul class="list-inline text-center">
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"></i>
+                                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <!-- Contact Form JavaScript -->
+    <!-- <script src="js/jqBootstrapValidation.js"></script> -->
+    <!-- <script src="js/contact_me.js"></script> -->
+
+    <!-- Theme JavaScript -->
+    <script src="/static/clean-blog.js"></script>
+
 
 {% endblock %}

@@ -26,7 +26,9 @@ def index(page):
     if minPost > 0:
         prevPage = True
 
-    if page <= 0 or page > math.ceil(total_posts / 5):
+    if page <= 0:
+        return flask.abort(code=404)
+    if page > math.ceil(total_posts / 5) and page != 1:
         return flask.abort(code=404)
 
     return flask.render_template('index.html', auth_user=auth_user, posts=posts,
@@ -70,10 +72,12 @@ def create_form():
 def handle_create():
     title = flask.request.form['title']
     text = flask.request.form['post-text']
+    subtitle = flask.request.form['subtitle']
     #add post to database
     post = models.Post()
     post.title = title
     post.body = text
+    post.subtitle = subtitle
     post.date = datetime.datetime.now(tz=None)
     db.session.add(post)
     db.session.commit()
