@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Blog{% endblock %}
+{% block title %}TechWorld{% endblock %}
 {% block css %}/static/clean-blog.css{% endblock %}
 {% block content %}
 
@@ -21,7 +21,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="/">Home</a>
+                        <a href="/" id="header-home-link">Home</a>
                     </li>
                     <li>
                         <a href="about.html">About</a>
@@ -83,20 +83,18 @@
                 {% endfor %}
 
                 <!-- Pager -->
-            {% if nextPage %}
                 <ul class="pager">
+                {% if nextPage %}
                     <li class="next">
                         <a href="{{ page + 1 }}">Older Posts &rarr;</a>
                     </li>
-                </ul>
-            {% endif %}
-            {% if prevPage %}
-                <ul class="pager">
+                {% endif %}
+                {% if prevPage%}
                     <li class="prev">
-                        <a href="{{ page - 1 }}">Newer Posts &larr;</a>
+                        <a href="{{ page - 1 }}">&larr; Newer Posts</a>
                     </li>
+                {% endif %}
                 </ul>
-            {% endif %}
             </div>
         </div>
     </div>
@@ -110,7 +108,7 @@
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                     <ul class="list-inline text-center">
                         <li>
-                            <a href="#">
+                            <a href="https://www.twitter.com">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
@@ -118,7 +116,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="https://www.facebook.com">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
@@ -126,7 +124,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="https://github.com/lmc110">
                                 <span class="fa-stack fa-lg">
                                     <i class="fa fa-circle fa-stack-2x"></i>
                                     <i class="fa fa-github fa-stack-1x fa-inverse"></i>
@@ -134,7 +132,7 @@
                             </a>
                         </li>
                     </ul>
-                    <p class="copyright text-muted">Copyright &copy; Your Website 2016</p>
+                    <p class="copyright text-muted">Copyright &copy; TechWorld 2016</p>
                 </div>
             </div>
         </div>

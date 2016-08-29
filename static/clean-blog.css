@@ -78,11 +78,16 @@ hr.small {
   }
   .navbar-custom .nav li a {
     color: white;
-    padding: 20px;
+    padding: 20px 10px 10px 10px;
   }
   .navbar-custom .nav li a:hover,
   .navbar-custom .nav li a:focus {
     color: rgba(255, 255, 255, 0.8);
+  }
+}
+@media only screen and (min-width: 820px) {
+  .navbar-custom .nav li a {
+    padding: 20px 20px 20px 10px;
   }
 }
 @media only screen and (min-width: 1170px) {
@@ -371,6 +376,20 @@ form .row:first-child .floating-label-form-group {
   color: #777777;
   background-color: #333333;
   cursor: not-allowed;
+}
+.pager > .prev {
+  position: center;
+}
+body > div.container > div > div > ul > li.next > a {
+  float: none;
+}
+@media only screen and (min-width: 425px) {
+  .pager > .prev {
+    float: left;
+  }
+  body > div.container > div > div > ul > li.next > a {
+    float: right;
+  }
 }
 ::-moz-selection {
   color: white;

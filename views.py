@@ -93,6 +93,7 @@ def post_page(pid):
     body = Markup(markdown.markdown(post.body, output_format='html5'))
     return flask.render_template('post.html', title=post.title,
                                  body=body,
+                                 subtitle=post.subtitle,
                                  date=post.date)
 
 
