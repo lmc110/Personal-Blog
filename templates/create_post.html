@@ -4,26 +4,38 @@
 {% block content %}
 
 
-
-    <form method="POST" action="/create" class="pure-form pure-form-stacked">
-        <fieldset>
-            <legend>Create Blog Post:</legend>
-            <p>
-                <label>Title:<br>
-                    <input type="text" name="title" required="required" class="pure-input title-box">
-                </label>
-            </p>
-            <p>
-                <label>Subtitle (Optional):<br>
-                    <input type="text" name="subtitle" class="pure-input subtitle-box">
-                </label>
-            </p>
-            <p>
-                <label>Text:<br>
-                <textarea rows="8" cols="25" name="post-text" class="text-box pure-input"></textarea>
-                </label>
-            </p>
-            <button type="submit" class="pure-button pure-button-primary">Post</button>
-        </fieldset>
+    <form name="sentMessage" id="contactForm" method="POST" action="/create">
+        <div class="row control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                <label>Title:</label>
+                <input type="text" class="form-control" placeholder="Title" id="title" name="title" required data-validation-required-message="Please enter your username.">
+                <p class="help-block text-danger"></p>
+            </div>
+        </div>
+        <div class="row control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                <label>Subtitle (Optional):</label>
+                <input type="text" class="form-control" placeholder="Subtitle" id="subtitle" name="subtitle">
+                <p class="help-block text-danger"></p>
+            </div>
+        </div>
+        <div class="row control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                <label>Content:</label>
+                <textarea rows="8" cols="25" class="form-control" id="subtitle" name="post-text" required data-validation-required-message="Please Enter Content.">
+                </textarea>
+                <p class="help-block text-danger"></p>
+            </div>
+        </div>
+        <br>
+        <div id="success"></div>
+        <div class="row">
+            <div class="form-group col-xs-12">
+                <button type="submit" class="btn btn-default">Post</button>
+            </div>
+        </div>
     </form>
+
+
+    <script>tinymce.init({ selector:'textarea' });</script>
 {% endblock %}
