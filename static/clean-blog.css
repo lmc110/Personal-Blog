@@ -409,6 +409,19 @@ img::-moz-selection {
   color: white;
   background: transparent;
 }
+#contactForm {
+  margin: 1em 1em auto;
+}
+@media only screen and (min-width: 768px) {
+  #contactForm {
+    margin: 2em 4em auto;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  #contactForm {
+    margin: 2em 7em auto;
+  }
+}
 body {
   -webkit-tap-highlight-color: #0085A1;
 }

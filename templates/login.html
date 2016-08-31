@@ -1,9 +1,23 @@
 {% extends 'base.html' %}
 {% block title %}Login{% endblock %}
+{% block css %}/static/clean-blog.css{% endblock %}
 {% block content %}
-    <a href="/" class="home">HOME</a>
 
-    <h1>Login</h1>
+    <header class="intro-header" style="background-image: url('/static/images/login-bg.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="page-heading">
+                    <h1>Login</h1>
+                    <hr class="small">
+                    <span class="subheading">Welcome Back.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </header>
+
+
     {% if state == 'bad' %}
         {% with errors = get_flashed_messages(category_filter=["error"]) %}
             <div class="alert-message error">
@@ -15,12 +29,31 @@
             </div>
         {% endwith %}
     {% endif %}
-    <div class="pure-u-1">
-    <form method="POST" action="/login" class="pure-form pure-form-stacked">
-        <label>Username: <input type="text" name="user" class="username-box"></label>
-        <label>Password: <input type="password" name="password" class="password-box"></label>
-        <button type="submit" class="pure-button pure-button-primary">Log In</button>
+
+
+
+    <form name="sentMessage" id="contactForm" method="POST" action="/login">
+        <div class="row control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                <label>Username</label>
+                <input type="text" class="form-control" placeholder="Name" id="name" name="user" required data-validation-required-message="Please enter your username.">
+                <p class="help-block text-danger"></p>
+            </div>
+        </div>
+        <div class="row control-group">
+            <div class="form-group col-xs-12 floating-label-form-group controls">
+                <label>Password</label>
+                <input type="password" class="form-control" placeholder="Password" id="password" name="password" required data-validation-required-message="Please enter your password.">
+                <p class="help-block text-danger"></p>
+            </div>
+        </div>
+        <br>
+        <div id="success"></div>
+        <div class="row">
+            <div class="form-group col-xs-12">
+                <button type="submit" class="btn btn-default">Login</button>
+            </div>
+        </div>
     </form>
-    </div>
 
 {% endblock %}

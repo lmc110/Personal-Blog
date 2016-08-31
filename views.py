@@ -97,6 +97,11 @@ def post_page(pid):
                                  date=post.date)
 
 
+@app.route('/contact')
+def contact_page():
+    return flask.render_template('contact.html')
+
+
 @app.errorhandler(404)
 def page_not_found(err):
     return flask.render_template('404.html'), 404
