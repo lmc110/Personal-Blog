@@ -3,6 +3,7 @@ import models
 import markdown
 import math
 import datetime
+import random
 
 from markupsafe import Markup
 from init import db, app
@@ -100,6 +101,19 @@ def post_page(pid):
 @app.route('/contact')
 def contact_page():
     return flask.render_template('contact.html')
+
+
+@app.route('/random')
+def random_post():
+    posts = models.Post.query.all()
+    upper_bound = len(posts)
+    random_num = random.randrange(1, upper_bound)
+    rand_post = models.Post.query.get(random_num)
+    body = Markup(markdown.markdown(rand_post.body, output_format='html5'))
+    return flask.render_template('post.html', title=rand_post.title,
+                                 body=body,
+                                 subtitle=rand_post.subtitle,
+                                 date=rand_post.date)
 
 
 @app.errorhandler(404)
